@@ -1,12 +1,12 @@
 // Your JavaScript goes here
 console.log('Hello, World!');
 
-// script.js
 document.addEventListener('DOMContentLoaded', function() {
     const gridContainer = document.getElementById('grid-container');
     const slider = document.getElementById('grid-size-slider');
     const gridSizeDisplay = document.getElementById('grid-size-display');
     const clearButton = document.getElementById('Clear'); // Get the clear button
+    const startButton = document.getElementById('Start'); // Get the start button
     let cellStates = []; // 2D array to hold the state of each cell
 
     // Function to update the grid based on the slider value
@@ -56,6 +56,40 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // Function to send active cell states to the backend
+    function sendCellsToBackend() {
+        let activeCells = [];
+        let totalCells = 0; // To count total cells
+
+        // Gather active cell coordinates
+        for (let i = 0; i < cellStates.length; i++) {
+            for (let j = 0; j < cellStates[i].length; j++) {
+                totalCells++; // Increment for each cell
+                if (cellStates[i][j]) { // Check if the cell is active
+                    activeCells.push([i, j]); // Add active cell coordinates
+                }
+            }
+        }
+
+        // Prepare the data to send
+        const dataToSend = {
+            totalCells: totalCells,
+            activeCells: activeCells
+        };
+
+        // Fetch API to send the data
+        fetch('http://localhost:8000/process_cells/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dataToSend)
+        })
+        .then(response => response.json())
+        .then(data => console.log('Success:', data))
+        .catch((error) => console.error('Error:', error));
+    }
+
     // Function to clear the grid
     const clearGrid = () => {
         cellStates.forEach(row => row.fill(false)); // Set all states to dead
@@ -68,15 +102,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Attach event listener to the "Clear" button
     clearButton.addEventListener('click', clearGrid);
 
+    // Attach event listener to the "Start" button to both start the game and send cells
+    startButton.addEventListener('click', () => {
+        // Assuming here you have other code that starts the game
+        sendCellsToBackend(); // Also sends the current state of the cells to the backend
+    });
+
+    
     // Initial grid setup
     updateGrid();
 });
 
 // JavaScript to control the Explanation popup
-document.getElementById('Explanation').onclick = function() {
-    document.getElementById('explanationPopup').style.display = 'block'; // This shows the popup
-};
-
-document.querySelector('.close-btn').onclick = function() {
-    document.getElementById('explanationPopup').style.display = 'none'; // This hides the popup
-};
+document.getElementById('Explanation').onclick
