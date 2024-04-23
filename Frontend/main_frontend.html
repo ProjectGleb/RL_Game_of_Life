@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<!-- 
+    CSS elements I'll need:
+-->
+
+<head>
+        <title>
+            Gleb's Game of Life
+        </title>
+
+
+    <!-- CSS file connection -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* CSS goes here */
+    </style>
+</head>
+
+<!-- 
+HTML Elements I'll need:
+ • 4x4 Grid
+ • 2 Sliders (Speed, Grid Size)
+ • 4 Buttons (Start, Stop, Clear, Lexicon, Explanation,)
+-->
+
+<body>
+    
+    <!-- HTML elements go here-->
+    <h1>Gleb's Game of Life!</h1>
+    <h3>Let the intelligence begin!</h3>
+    
+
+
+    <div class="center-container">
+        <div id="grid-container"></div>
+    </div>    
+    <input type="range" id="grid-size-slider" min="10" max="100" value="50" step="5">
+    <input type="range" id="generation-speed" min="10" max="100" value="50" step="5">
+    <span id="grid-size-display">50</span>
+
+
+
+
+    <!-- HTML code with button class -->
+    <div class="controls">
+        <div class="buttons">
+            <button class="button" id="Explanation">Explanation</button>
+            <button class="button" id="Lexicon">Lexicon</button>
+            <button class="button" id="Start">Start</button>
+            <button class="button" id="Clear">Clear</button>
+            <button class="button" id="Clear">Next</button>
+        </div>
+    </div>
+
+
+    <!-- Explanation Popup Window HTML -->
+    <div id="explanationPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h1>Explanation</h1>
+            <p>1. Each cell with one or no neighbors dies, as if by solitude.</p>
+            <p>2. Each cell with four or more neighbors dies, as if by overpopulation.</p>
+            <p>3. Each cell with two or three neighbors survives.</p>
+            <p>4. Each cell with three neighbors becomes populated.</p>
+        </div>
+    </div>
+    
+
+    <!-- Javascript file connectiomn-->
+    <script src="script.js"></script>
+</body>
+</html>
